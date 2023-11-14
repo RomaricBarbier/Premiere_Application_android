@@ -18,8 +18,8 @@ interface Api {
     @GET("trending/person/week")
     suspend fun lastpersons(@Query("api_key") api_key : String) : PersonSemaineFr
 
-    @GET("/movie/{filmId}")
-    suspend fun detailfilm(@Path("filmId") filmId : String,@Query("api_key") api_key : String) : DescFILM
+    @GET("movie/{filmId}?append_to_response=credits&language=fr")
+    suspend fun detailfilm(@Path("filmId") filmId : String?, @Query("api_key") api_key: String) : DescFILM
 }
 
 

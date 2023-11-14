@@ -83,7 +83,6 @@ class ViewModeldescfilm (savedStateHandle: SavedStateHandle): ViewModel() {
     init {
         getDescFilm()
     }
-
     fun getDescFilm(){
         viewModelScope.launch {
              listDetailFilm.value = api.detailfilm(filmId, api_key = "24714091346b3079a0414fe486ba3858")

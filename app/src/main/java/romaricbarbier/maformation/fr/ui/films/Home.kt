@@ -67,7 +67,7 @@ fun LayoutverticalFilm(modifier: Modifier = Modifier, windowSizeClass : WindowSi
             )){
 
         items (films.value){ film ->
-            Card(onClick = { innernavController.navigate("DescFilm/" + film.id) }) {
+            Card(onClick = { innernavController.navigate("DescFILM/" + film.id) }) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImage(
                         model = ("https://image.tmdb.org/t/p/w780/" + film.poster_path),

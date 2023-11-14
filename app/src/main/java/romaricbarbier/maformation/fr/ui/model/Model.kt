@@ -176,3 +176,4 @@ data class Crew(
     val popularity: Double = 0.0,
     val profile_path: String = ""
 )
+
