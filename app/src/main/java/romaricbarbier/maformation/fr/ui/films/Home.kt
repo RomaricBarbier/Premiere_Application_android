@@ -3,6 +3,7 @@ package romaricbarbier.maformation.fr.ui.films
 import android.annotation.SuppressLint
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,6 +62,7 @@ fun LayoutverticalFilm(modifier: Modifier = Modifier, windowSizeClass : WindowSi
 
     LazyVerticalGrid( columns = GridCells.Fixed(2),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),
@@ -95,6 +97,7 @@ fun LayouthorizontalFilm(modifier: Modifier = Modifier,windowSizeClass : WindowS
 
     LazyVerticalGrid( columns = GridCells.Fixed(3),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),

@@ -34,6 +34,7 @@ import romaricbarbier.maformation.fr.ui.films.LayouthorizontalDescFilm
 import romaricbarbier.maformation.fr.ui.films.LayoutverticalDescFilm
 import romaricbarbier.maformation.fr.ui.films.ScreenACTOR
 import romaricbarbier.maformation.fr.ui.films.ScreenDescFILM
+import romaricbarbier.maformation.fr.ui.films.ScreenDescSERIE
 import romaricbarbier.maformation.fr.ui.films.ScreenFILM
 import romaricbarbier.maformation.fr.ui.films.ScreenSERIE
 
@@ -76,9 +77,10 @@ fun Navigation(modifier: Modifier = Modifier, windowSizeClass : WindowSizeClass)
             Modifier.padding(innerPadding)
         ) {
             composable("home") { ScreenFILM(windowSizeClass,innernavController) }
-            composable("series") { ScreenSERIE(windowSizeClass) }
+            composable("series") { ScreenSERIE(windowSizeClass,innernavController) }
             composable("actor") { ScreenACTOR(windowSizeClass) }
             composable("DescFILM/{filmId}") { ScreenDescFILM(windowSizeClass) }
+            composable("DetailsSerie/{serieId}") { ScreenDescSERIE(windowSizeClass) }
         }
     }
 }

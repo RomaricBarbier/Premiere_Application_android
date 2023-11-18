@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,18 +52,18 @@ import romaricbarbier.maformation.fr.ui.theme.PremiereApplicationMonProfilTheme
 
 
 @Composable
-fun ScreenSERIE(windowSizeClass: WindowSizeClass){
+fun ScreenSERIE(windowSizeClass: WindowSizeClass,innernavController: NavController){
     val classeHauteur = windowSizeClass.heightSizeClass
     val classeLargeur = windowSizeClass.widthSizeClass
 
     when (classeLargeur) {
         WindowWidthSizeClass.Compact -> {
-            LayoutverticalSerie(Modifier, windowSizeClass)
+            LayoutverticalSerie(Modifier, windowSizeClass ,innernavController)
         }
         else -> {
             Row(Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically) {
-                LayouthorizontalSerie(Modifier, windowSizeClass)
+                LayouthorizontalSerie(Modifier, windowSizeClass,innernavController)
             }
         }
     }
@@ -71,7 +72,7 @@ fun ScreenSERIE(windowSizeClass: WindowSizeClass){
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LayoutverticalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSizeClass) {
+fun LayoutverticalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSizeClass, innernavController :NavController) {
 
     val ViewModel : ViewModelserie = viewModel()
     val films = ViewModel.listtvs.collectAsState()
@@ -79,13 +80,14 @@ fun LayoutverticalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSi
 
     LazyVerticalGrid( columns = GridCells.Fixed(2),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),
             )){
 
         items (films.value){ tv ->
-            Card {
+            Card (onClick = { innernavController.navigate("DetailsSerie/" + tv.id) }){
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     AsyncImage(
                         model = ("https://image.tmdb.org/t/p/w780/" + tv.poster_path),
@@ -105,22 +107,21 @@ fun LayoutverticalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSi
 
 
 @Composable
-fun LayouthorizontalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSizeClass) {
+fun LayouthorizontalSerie(modifier: Modifier = Modifier, windowSizeClass: WindowSizeClass, innernavController :NavController) {
 
     val ViewModel : ViewModelserie = viewModel()
     val films = ViewModel.listtvs.collectAsState()
 
     LazyVerticalGrid( columns = GridCells.Fixed(3),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),
             )){
         items (films.value){ tv ->
-            Card {
-                Column(verticalArrangement = Arrangement.Center
-                ) {
-
+            Card /*(onClick = { innernavController.navigate("DetailsSerie/" + tv.id) })*/{
+                Column(verticalArrangement = Arrangement.Center) {
                     AsyncImage(
                         model = ("https://image.tmdb.org/t/p/w780/" + tv.poster_path),
                         contentDescription = null,
@@ -132,7 +133,7 @@ fun LayouthorizontalSerie(modifier: Modifier = Modifier, windowSizeClass: Window
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,)
-                    }
+                }
             }
 
         }

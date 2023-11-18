@@ -4,6 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import romaricbarbier.maformation.fr.ui.model.DescFILM
+import romaricbarbier.maformation.fr.ui.model.DetailsSerie
 import romaricbarbier.maformation.fr.ui.model.FilmsSemaineFR
 import romaricbarbier.maformation.fr.ui.model.PersonSemaineFr
 import romaricbarbier.maformation.fr.ui.model.TvSemaineFR
@@ -20,6 +21,9 @@ interface Api {
 
     @GET("movie/{filmId}?append_to_response=credits&language=fr")
     suspend fun detailfilm(@Path("filmId") filmId : String?, @Query("api_key") api_key: String) : DescFILM
+
+    @GET("tv/{serieId}?append_to_response=credits&language=fr")
+    suspend fun detailserie(@Path("serieId") serieId : String?, @Query("api_key") api_key: String) : DetailsSerie
 }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -79,6 +80,7 @@ fun LayoutverticalActor(modifier: Modifier = Modifier,windowSizeClass: WindowSiz
 
     LazyVerticalGrid( columns = GridCells.Fixed(2),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),
@@ -112,6 +114,7 @@ fun LayouthorizontalActor(modifier: Modifier = Modifier,windowSizeClass: WindowS
 
     LazyVerticalGrid( columns = GridCells.Fixed(3),
         modifier = Modifier
+            .background(Color.LightGray)
             .padding(top = 70.dp)
             .border(
                 BorderStroke(0.3.dp, Color.Black),

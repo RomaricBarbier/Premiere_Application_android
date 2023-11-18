@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import romaricbarbier.maformation.fr.ui.model.DescFILM
+import romaricbarbier.maformation.fr.ui.model.DetailsSerie
 import romaricbarbier.maformation.fr.ui.model.Film
 import romaricbarbier.maformation.fr.ui.model.Persons
 import romaricbarbier.maformation.fr.ui.model.Tv
@@ -86,6 +87,24 @@ class ViewModeldescfilm (savedStateHandle: SavedStateHandle): ViewModel() {
     fun getDescFilm(){
         viewModelScope.launch {
              listDetailFilm.value = api.detailfilm(filmId, api_key = "24714091346b3079a0414fe486ba3858")
+        }
+    }
+}
+
+
+class ViewModeldescserie (savedStateHandle: SavedStateHandle): ViewModel() {
+
+    private val serieId : String = checkNotNull(savedStateHandle["serieId"])
+    val api = retrofit.create(Api::class.java)
+
+    val listDetailserie = MutableStateFlow<DetailsSerie>(DetailsSerie())
+
+    init {
+        getDescserie()
+    }
+    fun getDescserie(){
+        viewModelScope.launch {
+            listDetailserie.value = api.detailserie(serieId, api_key = "24714091346b3079a0414fe486ba3858")
         }
     }
 }

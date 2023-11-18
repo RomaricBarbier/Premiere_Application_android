@@ -36,177 +36,45 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import romaricbarbier.maformation.fr.ui.MainViewModel
 import romaricbarbier.maformation.fr.ui.ViewModeldescfilm
+import romaricbarbier.maformation.fr.ui.ViewModeldescserie
 import java.time.format.TextStyle
 
 
 @Composable
-fun ScreenDescFILM(windowSizeClass: WindowSizeClass){
+fun ScreenDescSERIE(windowSizeClass: WindowSizeClass){
     val classeHauteur = windowSizeClass.heightSizeClass
     val classeLargeur = windowSizeClass.widthSizeClass
 
     when (classeLargeur) {
         WindowWidthSizeClass.Compact -> {
-            LayoutverticalDescFilm(Modifier, windowSizeClass)
+            LayoutverticalDescSerie(Modifier, windowSizeClass)
         }
         else -> {
             Row(Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically) {
-                LayouthorizontalDescFilm(Modifier, windowSizeClass)
+                LayouthorizontalDescSerie(Modifier, windowSizeClass)
             }
         }
     }
 }
 
 @Composable
-fun LayoutverticalDescFilm(modifier: Modifier = Modifier, windowSizeClass : WindowSizeClass) {
-    val ViewModel: ViewModeldescfilm = viewModel()
-    val detailsfilm = ViewModel.listDetailFilm.collectAsState()
-
-        Column (
-            modifier = Modifier.verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
-            /*Titre du film*/
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 20.dp),
-                horizontalArrangement = Arrangement.Center) {
-                Text(
-                    text = detailsfilm.value.title,
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 30.sp,
-                    color = Color.White
-                )
-            }
-
-            /*Poster fond de toile*/
-            Row(
-                modifier = Modifier
-                    .background(Color.DarkGray)
-                    .fillMaxSize()
-                    .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.Center) {
-                AsyncImage(
-                    model = "https://image.tmdb.org/t/p/w780/" + detailsfilm.value.backdrop_path,
-                    contentDescription = "Poster fond de toile"
-                )
-            }
-
-            /*Phrase d'acroche*/
-            Row(
-                modifier = Modifier
-                    .background(Color.DarkGray)
-                    .fillMaxSize()
-                    .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.Center){
-                Text(
-                    text = detailsfilm.value.tagline,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-            }
-
-            /*Genre du film*/
-            Row(
-                modifier = Modifier
-                    .background(Color.DarkGray)
-                    .fillMaxSize()
-                    .padding(vertical = 15.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly) {
-                var genresTemp : String = ""
-                detailsfilm.value.genres.forEach { genre -> genresTemp += genre.name + " - " }
-                Text(
-                    text = genresTemp,
-                    color = Color.White,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 10.dp))
-            }
-
-            /*Affiche et synopsis*/
-            Row(modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = 16.dp)) {
-
-                /*Affiche du filme*/
-                Column (verticalArrangement = Arrangement.Center){
-                    AsyncImage( model = "https://image.tmdb.org/t/p/w780/" + detailsfilm.value.poster_path,
-                        contentDescription = "Affiche du filme",
-                        modifier = Modifier.size(150.dp))
-                }
-
-                /*Synopsis*/
-                Column (
-                    modifier = Modifier.fillMaxHeight(),
-                    horizontalAlignment = Alignment.CenterHorizontally){
-                    Text(
-                        text = "Synopsis",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 15.dp, end = 30.dp))
-                    Text(
-                        text = detailsfilm.value.overview,
-                        modifier = Modifier.padding(end = 30.dp))
-                }
-            }
-
-            /*Distribution*/
-            Row (modifier = Modifier
-                .background(Color.Black)
-                .fillMaxSize(),
-                horizontalArrangement = Arrangement.Center) {
-                Text(text = "Distribution",
-                    color = Color.White,
-                    fontSize = 20.sp)
-            }
-
-            Row(modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .background(Color.Black)
-                .padding(16.dp)) {
-                detailsfilm.value.credits.cast.forEach { cast ->
-                    Surface(
-                        color = Color.Gray.copy(0.15f),
-                        shape = MaterialTheme.shapes.medium,
-                        onClick = {}) {
-                        Column (modifier = Modifier
-                            .fillMaxSize()
-                            .padding(vertical = 8.dp), horizontalAlignment = Alignment.CenterHorizontally,){
-                            AsyncImage(modifier = Modifier.size(300.dp),
-                                model = "https://image.tmdb.org/t/p/w780/" + cast.profile_path,
-                                contentDescription = null)
-                            Text(text = cast.name, color = Color.White, fontSize = 15.sp, modifier = Modifier.padding(vertical = 8.dp))
-                            Text(text = cast.character, color = Color.White, fontSize = 15.sp)
-                        }
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-            }
-        }
-    }
-
-
-
-
-@Composable
-fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : WindowSizeClass) {
-
-    val ViewModel: ViewModeldescfilm = viewModel()
-    val detailsfilm = ViewModel.listDetailFilm.collectAsState()
+fun LayoutverticalDescSerie(modifier: Modifier = Modifier, windowSizeClass : WindowSizeClass) {
+    val ViewModel: ViewModeldescserie = viewModel()
+    val detailsserie = ViewModel.listDetailserie.collectAsState()
 
     Column (
         modifier = Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        /*Titre du film*/
+        /*Titre de la serie*/
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 20.dp),
             horizontalArrangement = Arrangement.Center) {
             Text(
-                text = detailsfilm.value.title,
+                text = detailsserie.value.name,
                 fontStyle = FontStyle.Italic,
                 fontSize = 30.sp,
                 color = Color.White
@@ -216,12 +84,12 @@ fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : Win
         /*Poster fond de toile*/
         Row(
             modifier = Modifier
-                .background(Color.DarkGray)
+                .background(Color.Blue)
                 .fillMaxSize()
                 .padding(top = 15.dp),
             horizontalArrangement = Arrangement.Center) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w780/" + detailsfilm.value.backdrop_path,
+                model = "https://image.tmdb.org/t/p/w780/" + detailsserie.value.backdrop_path,
                 contentDescription = "Poster fond de toile"
             )
         }
@@ -229,26 +97,26 @@ fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : Win
         /*Phrase d'acroche*/
         Row(
             modifier = Modifier
-                .background(Color.DarkGray)
+                .background(Color.Blue)
                 .fillMaxSize()
                 .padding(top = 15.dp),
             horizontalArrangement = Arrangement.Center){
             Text(
-                text = detailsfilm.value.tagline,
+                text = detailsserie.value.tagline,
                 color = Color.White,
                 fontSize = 20.sp
             )
         }
 
-        /*Genre du film*/
+        /*Genre de la serie*/
         Row(
             modifier = Modifier
-                .background(Color.DarkGray)
+                .background(Color.Blue)
                 .fillMaxSize()
                 .padding(vertical = 15.dp),
             horizontalArrangement = Arrangement.SpaceEvenly) {
             var genresTemp : String = ""
-            detailsfilm.value.genres.forEach { genre -> genresTemp += genre.name + " - " }
+            detailsserie.value.genres.forEach { genre -> genresTemp += genre.name + " - " }
             Text(
                 text = genresTemp,
                 color = Color.White,
@@ -264,7 +132,7 @@ fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : Win
 
             /*Affiche du filme*/
             Column (verticalArrangement = Arrangement.Center){
-                AsyncImage( model = "https://image.tmdb.org/t/p/w780/" + detailsfilm.value.poster_path,
+                AsyncImage( model = "https://image.tmdb.org/t/p/w780/" + detailsserie.value.poster_path,
                     contentDescription = "Affiche du filme",
                     modifier = Modifier.size(150.dp))
             }
@@ -279,7 +147,7 @@ fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : Win
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 15.dp, end = 30.dp))
                 Text(
-                    text = detailsfilm.value.overview,
+                    text = detailsserie.value.overview,
                     modifier = Modifier.padding(end = 30.dp))
             }
         }
@@ -298,7 +166,140 @@ fun LayouthorizontalDescFilm(modifier: Modifier = Modifier,windowSizeClass : Win
             .horizontalScroll(rememberScrollState())
             .background(Color.Black)
             .padding(16.dp)) {
-            detailsfilm.value.credits.cast.forEach { cast ->
+            detailsserie.value.credits.cast.forEach { cast ->
+                Surface(
+                    color = Color.Gray.copy(0.15f),
+                    shape = MaterialTheme.shapes.medium,
+                    onClick = {}) {
+                    Column (modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 8.dp), horizontalAlignment = Alignment.CenterHorizontally,){
+                        AsyncImage(modifier = Modifier.size(300.dp),
+                            model = "https://image.tmdb.org/t/p/w780/" + cast.profile_path,
+                            contentDescription = null)
+                        Text(text = cast.name, color = Color.White, fontSize = 15.sp, modifier = Modifier.padding(vertical = 8.dp))
+                        Text(text = cast.character, color = Color.White, fontSize = 15.sp)
+                    }
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+        }
+    }
+}
+
+
+
+
+@Composable
+fun LayouthorizontalDescSerie(modifier: Modifier = Modifier,windowSizeClass : WindowSizeClass) {
+
+    val ViewModel: ViewModeldescserie = viewModel()
+    val detailsserie = ViewModel.listDetailserie.collectAsState()
+
+    Column (
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+
+        /*Titre de la serie*/
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 20.dp),
+            horizontalArrangement = Arrangement.Center) {
+            Text(
+                text = detailsserie.value.name,
+                fontStyle = FontStyle.Italic,
+                fontSize = 30.sp,
+                color = Color.White
+            )
+        }
+
+        /*Poster fond de toile*/
+        Row(
+            modifier = Modifier
+                .background(Color.Blue)
+                .fillMaxSize()
+                .padding(top = 15.dp),
+            horizontalArrangement = Arrangement.Center) {
+            AsyncImage(
+                model = "https://image.tmdb.org/t/p/w780/" + detailsserie.value.backdrop_path,
+                contentDescription = "Poster fond de toile"
+            )
+        }
+
+        /*Phrase d'acroche*/
+        Row(
+            modifier = Modifier
+                .background(Color.Blue)
+                .fillMaxSize()
+                .padding(top = 15.dp),
+            horizontalArrangement = Arrangement.Center){
+            Text(
+                text = detailsserie.value.tagline,
+                color = Color.White,
+                fontSize = 20.sp
+            )
+        }
+
+        /*Genre de la serie*/
+        Row(
+            modifier = Modifier
+                .background(Color.Blue)
+                .fillMaxSize()
+                .padding(vertical = 15.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly) {
+            var genresTemp : String = ""
+            detailsserie.value.genres.forEach { genre -> genresTemp += genre.name + " - " }
+            Text(
+                text = genresTemp,
+                color = Color.White,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 10.dp))
+        }
+
+        /*Affiche et synopsis*/
+        Row(modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 16.dp)) {
+
+            /*Affiche du filme*/
+            Column (verticalArrangement = Arrangement.Center){
+                AsyncImage( model = "https://image.tmdb.org/t/p/w780/" + detailsserie.value.poster_path,
+                    contentDescription = "Affiche du filme",
+                    modifier = Modifier.size(150.dp))
+            }
+
+            /*Synopsis*/
+            Column (
+                modifier = Modifier.fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally){
+                Text(
+                    text = "Synopsis",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 15.dp, end = 30.dp))
+                Text(
+                    text = detailsserie.value.overview,
+                    modifier = Modifier.padding(end = 30.dp))
+            }
+        }
+
+        /*Distribution*/
+        Row (modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize(),
+            horizontalArrangement = Arrangement.Center) {
+            Text(text = "Distribution",
+                color = Color.White,
+                fontSize = 20.sp)
+        }
+
+        Row(modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .background(Color.Black)
+            .padding(16.dp)) {
+            detailsserie.value.credits.cast.forEach { cast ->
                 Surface(
                     color = Color.Gray.copy(0.15f),
                     shape = MaterialTheme.shapes.medium,
